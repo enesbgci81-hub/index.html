@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pışş Pışş - Bebek Bakım Uygulaması</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #7C5CBF;
+    --secondary: #FF7B54;
+    --accent: #4CAF82;
+    --cyan: #00BCD4;
+    --bg: #FBF8FF;
+    --text: #2D2D2D;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #7C5CBF 0%, #5E3D9B 50%, #3D2876 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 40px 20px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; width: 600px; height: 600px;
+    background: rgba(255,255,255,0.05); border-radius: 50%;
+    top: -200px; right: -200px; animation: float 8s ease-in-out infinite;
+  }
+  .hero::after {
+    content: ''; position: absolute; width: 400px; height: 400px;
+    background: rgba(255,123,84,0.15); border-radius: 50%;
+    bottom: -100px; left: -100px; animation: float 6s ease-in-out infinite reverse;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
+
+  .hero-emoji { font-size: 80px; animation: bounce 2s ease-in-out infinite; margin-bottom: 20px; }
+  @keyframes bounce { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-10px) scale(1.05)} }
+  
+  .hero h1 { font-size: clamp(48px, 8vw, 80px); font-weight: 900; color: white; letter-spacing: -2px; margin-bottom: 8px; }
+  .hero h2 { font-size: clamp(18px, 3vw, 24px); color: rgba(255,255,255,0.8); font-weight: 600; margin-bottom: 32px; }
+  
+  .badges { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px; }
+  .badge { background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 8px 20px; border-radius: 30px; font-size: 14px; font-weight: 700; }
+  
+  .cta-btn { background: var(--secondary); color: white; padding: 16px 40px; border-radius: 50px; font-size: 18px; font-weight: 800; text-decoration: none; display: inline-block; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 8px 30px rgba(255,123,84,0.4); }
+  .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(255,123,84,0.5); }
+
+  /* Features */
+  .section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+  .section-title { text-align: center; font-size: clamp(28px, 4vw, 42px); font-weight: 900; color: var(--primary); margin-bottom: 16px; }
+  .section-sub { text-align: center; color: #888; font-size: 16px; margin-bottom: 56px; }
+  
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .feature-card {
+    background: white; border-radius: 24px; padding: 32px;
+    box-shadow: 0 4px 20px rgba(124,92,191,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 2px solid transparent;
+  }
+  .feature-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(124,92,191,0.15); border-color: var(--primary); }
+  .feature-emoji { font-size: 48px; margin-bottom: 16px; display: block; }
+  .feature-card h3 { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+  .feature-card p { color: #888; font-size: 15px; line-height: 1.6; }
+
+  /* Pricing */
+  .pricing-bg { background: linear-gradient(135deg, #F8F5FF, #FFF5F2); padding: 80px 20px; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 900px; margin: 0 auto; }
+  .price-card {
+    background: white; border-radius: 24px; padding: 40px 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06); text-align: center;
+    transition: transform 0.3s;
+  }
+  .price-card.featured { background: linear-gradient(135deg, var(--primary), #5E3D9B); color: white; transform: scale(1.05); }
+  .price-card:hover { transform: translateY(-4px) scale(1.02); }
+  .price-card.featured:hover { transform: translateY(-4px) scale(1.07); }
+  .price-emoji { font-size: 48px; margin-bottom: 16px; }
+  .price-name { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  .price-amount { font-size: 48px; font-weight: 900; color: var(--primary); margin-bottom: 4px; }
+  .price-card.featured .price-amount { color: white; }
+  .price-period { color: #aaa; font-size: 14px; margin-bottom: 24px; }
+  .price-card.featured .price-period { color: rgba(255,255,255,0.7); }
+  .price-features { list-style: none; text-align: left; margin-bottom: 32px; }
+  .price-features li { padding: 8px 0; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+  .price-features li::before { content: '✓'; color: var(--accent); font-weight: 900; }
+  .price-card.featured .price-features li::before { color: #7FFFD4; }
+  .price-btn { display: block; padding: 14px; border-radius: 14px; font-weight: 800; font-size: 16px; text-decoration: none; transition: all 0.2s; }
+  .price-btn.outline { border: 2px solid var(--primary); color: var(--primary); }
+  .price-btn.outline:hover { background: var(--primary); color: white; }
+  .price-btn.solid { background: white; color: var(--primary); }
+  .price-btn.solid:hover { background: rgba(255,255,255,0.9); }
+
+  /* Danışman */
+  .consultant-section { padding: 80px 20px; background: white; }
+  .consultant-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 900px; margin: 0 auto; }
+  .consultant-card {
+    background: linear-gradient(135deg, #F0FAFA, #E8F5FF);
+    border-radius: 20px; padding: 28px; text-align: center;
+    border: 2px solid rgba(0,188,212,0.2);
+    transition: transform 0.3s;
+  }
+  .consultant-card:hover { transform: translateY(-4px); }
+  .consultant-emoji { font-size: 48px; margin-bottom: 12px; }
+  .consultant-card h3 { font-size: 17px; font-weight: 800; color: #333; margin-bottom: 4px; }
+  .consultant-card p { font-size: 13px; color: var(--cyan); font-weight: 700; }
+
+  /* Footer */
+  footer { background: #2D2D2D; color: white; text-align: center; padding: 40px 20px; }
+  footer h3 { font-size: 28px; font-weight: 900; margin-bottom: 8px; }
+  footer p { color: #aaa; font-size: 14px; }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 24px; max-width: 700px; margin: 0 auto 60px; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 42px; font-weight: 900; color: var(--primary); }
+  .stat-label { font-size: 14px; color: #888; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-emoji">🐣</div>
+  <h1>Pışş Pışş</h1>
+  <h2>Bebeğinizin bakımını sevgiyle takip edin</h2>
+  <div class="badges">
+    <span class="badge">📱 Android & iOS</span>
+    <span class="badge">🤖 AI Danışman</span>
+    <span class="badge">👨‍👩‍👧 Aile Paylaşımı</span>
+    <span class="badge">💉 Aşı Takibi</span>
+  </div>
+  <a href="#features" class="cta-btn">Ücretsiz Başla 🚀</a>
+</section>
+
+<!-- Stats -->
+<div style="background:white; padding:60px 20px;">
+  <div class="stats">
+    <div class="stat"><div class="stat-num">22+</div><div class="stat-label">Aşı Takibi</div></div>
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">Uzman Danışman</div></div>
+    <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Bebek Anısı</div></div>
+    <div class="stat"><div class="stat-num">7/24</div><div class="stat-label">AI Destek</div></div>
+  </div>
+</div>
+
+<!-- Features -->
+<section id="features">
+  <div class="section">
+    <h2 class="section-title">Her Şey Bir Uygulamada</h2>
+    <p class="section-sub">Bebeğinizin gelişimini, sağlığını ve anılarını kaydedin</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-emoji">🍼</span>
+        <h3>Günlük Rutinler</h3>
+        <p>Besleme, uyku ve bez değişimlerini kolayca kaydedin. Günlük özet ile bebeğinizin rutinini takip edin.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-emoji">💉</span>
+        <h3>Aşı Takvimi</h3>
+        <p>22 farklı aşı için otomatik takvim oluşturulur. Yaklaşan aşıları asla kaçırmayın.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-emoji">📊</span>
+        <h3>Büyüme Takibi</h3>
+        <p>Boy, kilo ve kafa çevresi ölçümlerini grafik olarak takip edin. Gelişimi görselleştirin.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-emoji">🤖</span>
+        <h3>AI Danışman</h3>
+        <p>7/24 yapay zeka destekli bebek bakım danışmanı. Her sorunuza anında cevap alın.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-emoji">📖</span>
+        <h3>Bebek Günlüğü</h3>
+        <p>Unutulmaz anları kaydedin. İlk adım, ilk sözcük — tüm özel anlar kalıcı olarak saklanır.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-emoji">👨‍👩‍👧</span>
+        <h3>Aile Paylaşımı</h3>
+        <p>Anne ve baba aynı bebeği davet koduyla paylaşabilir. Birlikte takip edin.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Danışmanlar -->
+<section class="consultant-section">
+  <div style="max-width:1100px; margin:0 auto;">
+    <h2 class="section-title">Uzman Danışmanlar</h2>
+    <p class="section-sub">Gerçek uzmanlardan anlık destek alın</p>
+    <div class="consultant-grid">
+      <div class="consultant-card">
+        <div class="consultant-emoji">👶</div>
+        <h3>Pediatrist</h3>
+        <p>Çocuk Doktoru</p>
+      </div>
+      <div class="consultant-card">
+        <div class="consultant-emoji">🧠</div>
+        <h3>Psikolog</h3>
+        <p>Çocuk Psikoloğu</p>
+      </div>
+      <div class="consultant-card">
+        <div class="consultant-emoji">🥗</div>
+        <h3>Diyetisyen</h3>
+        <p>Beslenme Uzmanı</p>
+      </div>
+      <div class="consultant-card">
+        <div class="consultant-emoji">💉</div>
+        <h3>Hemşire</h3>
+        <p>Bebek Bakım Uzmanı</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="pricing-bg">
+  <div style="max-width:1100px; margin:0 auto;">
+    <h2 class="section-title">Fiyatlandırma</h2>
+    <p class="section-sub">İhtiyacınıza göre plan seçin</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-emoji">🌱</div>
+        <div class="price-name">Ücretsiz</div>
+        <div class="price-amount">₺0</div>
+        <div class="price-period">Sonsuza kadar ücretsiz</div>
+        <ul class="price-features">
+          <li>Günlük rutin takibi</li>
+          <li>Aşı takvimi</li>
+          <li>Büyüme grafikleri</li>
+          <li>AI Danışman (sınırlı)</li>
+          <li>Bebek günlüğü</li>
+        </ul>
+        <a href="#" class="price-btn outline">Ücretsiz Başla</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-emoji">⭐</div>
+        <div class="price-name">Premium</div>
+        <div class="price-amount">₺49</div>
+        <div class="price-period">Aylık</div>
+        <ul class="price-features">
+          <li>Tüm ücretsiz özellikler</li>
+          <li>Sınırsız AI Danışman</li>
+          <li>Uzman danışmanlık</li>
+          <li>AI Avatar oluşturma</li>
+          <li>Öncelikli destek</li>
+        </ul>
+        <a href="#" class="price-btn solid">Premium'a Geç</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <h3>🐣 Pışş Pışş</h3>
+  <p style="margin-bottom:8px;">Bebeğinizin ilk adımlarında yanınızdayız</p>
+  <p>📧 destek@pissepisse.com</p>
+  <p style="margin-top:20px; font-size:12px; color:#555;">© 2026 Pışş Pışş. Tüm hakları saklıdır.</p>
+</footer>
+
+</body>
+</html>
